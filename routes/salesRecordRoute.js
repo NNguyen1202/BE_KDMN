@@ -14,6 +14,7 @@ const {
   dashboardSales,
   getCalendarRevenue,
   getRevenueByDay,
+  getRangeSummary,
 } = require("../controller/salesRecordCtrl");
 
 /**
@@ -158,6 +159,21 @@ router.get("/search", authMiddleware, searchSalesRecord);
  *         description: Thống kê doanh thu dashboard
  */
 router.get("/dashboard", authMiddleware, dashboardSales);
+
+/**
+ * @swagger
+ * /api/sales-record/range-summary:
+ *   get:
+ *     summary: Thống kê doanh thu theo khoảng thời gian
+ *     tags:
+ *       - SalesRecord
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Thống kê doanh thu theo khoảng thời gian
+ */
+router.get("/range-summary", getRangeSummary);
 
 /**
  * @swagger

@@ -14,14 +14,14 @@ const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 const server = http.createServer(app);
 
-const io = new Server(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-  },
-});
+// const io = new Server(server, {
+//   cors: {
+//     origin: "*",
+//     methods: ["GET", "POST"],
+//   },
+// });
 
-app.set("io", io);
+// app.set("io", io);
 
 // Import routes
 const authRouter = require("./routes/authRoute");
@@ -128,21 +128,21 @@ app.use("/api/sales-record", salesRecordRoute)
 app.use(notFound);
 app.use(errorHandler);
 
-bookingCheckInCron();
-bookingAutoCompleteCron();
+// bookingCheckInCron();
+// bookingAutoCompleteCron();
 
-io.on("connection", (socket) => {
-  console.log("Socket connected:", socket.id);
+// io.on("connection", (socket) => {
+//   console.log("Socket connected:", socket.id);
 
-  socket.on("join-room", (userId) => {
-    socket.join(userId);
-    console.log(` User ${userId} joined room`);
-  });
+//   socket.on("join-room", (userId) => {
+//     socket.join(userId);
+//     console.log(` User ${userId} joined room`);
+//   });
 
-  socket.on("disconnect", () => {
-    console.log("Socket disconnected:", socket.id);
-  });
-});
+//   socket.on("disconnect", () => {
+//     console.log("Socket disconnected:", socket.id);
+//   });
+// });
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

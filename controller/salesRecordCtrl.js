@@ -17,13 +17,9 @@ const updateSalesRecord = asyncHandler(async (req, res) => {
 
   validateMongoDbId(id);
 
-  const record = await SalesRecord.findByIdAndUpdate(
-    id,
-    req.body,
-    {
-      new: true,
-    }
-  );
+  const record = await SalesRecord.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
 
   res.json({
     success: true,
@@ -44,7 +40,7 @@ const deleteSalesRecord = asyncHandler(async (req, res) => {
     },
     {
       new: true,
-    }
+    },
   );
 
   res.json({
@@ -58,8 +54,7 @@ const getSalesRecord = asyncHandler(async (req, res) => {
 
   validateMongoDbId(id);
 
-  const record = await SalesRecord.findById(id)
-    .populate("userId", "-password");
+  const record = await SalesRecord.findById(id).populate("userId", "-password");
 
   res.json({
     success: true,
@@ -68,10 +63,7 @@ const getSalesRecord = asyncHandler(async (req, res) => {
 });
 
 const getAllSalesRecord = asyncHandler(async (req, res) => {
-  const {
-    page = 1,
-    limit = 20,
-  } = req.query;
+  const { page = 1, limit = 20 } = req.query;
 
   const skip = (page - 1) * limit;
 
@@ -96,12 +88,7 @@ const getAllSalesRecord = asyncHandler(async (req, res) => {
 });
 
 const searchSalesRecord = asyncHandler(async (req, res) => {
-  const {
-    keyword = "",
-    productType,
-    sourceType,
-    userId,
-  } = req.query;
+  const { keyword = "", productType, sourceType, userId } = req.query;
 
   const query = {
     isDelete: false,
@@ -178,7 +165,8 @@ const dashboardSales = asyncHandler(async (req, res) => {
   });
 });
 
-const getCalendarRevenue = asyncHandler(async (req, res) => {try {
+const getCalendarRevenue = asyncHandler(async (req, res) => {
+  try {
     const { month, year } = req.query;
 
     const startDate = new Date(year, month - 1, 1);
@@ -231,10 +219,11 @@ const getCalendarRevenue = asyncHandler(async (req, res) => {try {
       success: false,
       message: error.message,
     });
-  }});
+  }
+});
 
-  const getRevenueByDay = asyncHandler(async (req, res) => {
-    try {
+const getRevenueByDay = asyncHandler(async (req, res) => {
+  try {
     const { date } = req.query;
 
     const start = new Date(date);
@@ -288,7 +277,65 @@ const getCalendarRevenue = asyncHandler(async (req, res) => {try {
       message: error.message,
     });
   }
-  });
+});
+
+const getRangeSummary = asyncHandler(async (req, res) => {
+  try {
+    const { from, to } = req.query;
+
+    const records = await SalesRecord.find({
+      reportDate: {
+        $gte: new Date(from),
+        $lte: new Date(to),
+      },
+    });
+
+    const summary = {
+      totalRevenue: 0,
+      totalCustomers: 0,
+      totalProducts: 0,
+      totalRecords: 0,
+
+      easyHRMRevenue: 0,
+      easyHRMCustomers: 0,
+
+      iCareRevenue: 0,
+      iCareCustomers: 0,
+    };
+
+    records.forEach((item) => {
+      summary.totalRevenue += item.revenue || 0;
+
+      summary.totalCustomers += item.customerCount || 0;
+
+      summary.totalProducts += item.productQuantity || 0;
+
+      summary.totalRecords += 1;
+
+      if (item.productType === "EasyHRM") {
+        summary.easyHRMRevenue += item.revenue || 0;
+
+        summary.easyHRMCustomers += item.customerCount || 0;
+      }
+
+      if (item.productType === "iCare") {
+        summary.iCareRevenue += item.revenue || 0;
+
+        summary.iCareCustomers += item.customerCount || 0;
+      }
+    });
+
+    res.json({
+      success: true,
+      data: summary,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 
 module.exports = {
   createSalesRecord,
@@ -300,5 +347,6 @@ module.exports = {
   getByUser,
   dashboardSales,
   getCalendarRevenue,
-  getRevenueByDay
+  getRevenueByDay,
+  getRangeSummary,
 };
