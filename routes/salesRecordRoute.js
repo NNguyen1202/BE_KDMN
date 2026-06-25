@@ -49,8 +49,10 @@ const {
  *         productType:
  *           type: string
  *           enum:
- *             - EasyHRM
- *             - iCare
+ *             - EasyHRM MASS
+ *             - EasyHRM PROJECT
+ *             - iCare DN
+ *             - iCare HKD
  *
  *         sourceType:
  *           type: string

@@ -12,7 +12,7 @@ const salesRecordSchema = new mongoose.Schema(
 
     productType: {
       type: String,
-      enum: ["EasyHRM", "iCare"],
+      enum: ["EasyHRM MASS","EasyHRM PROJECT", "iCare DN", "iCare HKD"],
       required: true,
       index: true,
     },
