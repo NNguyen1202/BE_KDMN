@@ -1,4 +1,4 @@
-const XaPhuongBHXH = require("../models/xaPhuongBhxhModel");
+const XaPhuongBHXH = require("../models/managementAreaModel");
 
 const asyncHandler = require("express-async-handler");
 const validateMongoDbId = require("../utils/validateMongodbId");

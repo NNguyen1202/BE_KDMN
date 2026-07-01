@@ -1,5 +1,5 @@
-const CoQuanBHXH = require("../models/coQuanBhxhModel");
-const XaPhuongBHXH = require("../models/xaPhuongBhxhModel");
+const CoQuanBHXH = require("../models/agencyModel");
+const XaPhuongBHXH = require("../models/managementAreaModel");
 
 const asyncHandler = require("express-async-handler");
 const validateMongoDbId = require("../utils/validateMongodbId");

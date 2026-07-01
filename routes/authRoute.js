@@ -378,6 +378,27 @@ router.get("/logout", logout);
 
 /**
  * @swagger
+ * /api/user/{id}:
+ *   put:
+ *     summary: Delete a user
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: User ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *       404:
+ *         description: User not found
+ */
+router.delete("/:id", deleteUser);
+
+/**
+ * @swagger
  * /api/user/all-users:
  *   get:
  *     summary: Get all users
@@ -492,6 +513,5 @@ router.put("/block-user/:id", authMiddleware, isAdmin, blockUser);
  *         description: User not found
  */
 router.put("/active/:id", authMiddleware, isAdmin, unblockUser);
-//router.delete("/:id", deleteUser);
 
 module.exports = router;

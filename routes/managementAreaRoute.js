@@ -19,7 +19,7 @@ const {
   lookupWardCode,
   lookupWardName,
   searchXaPhuong,
-} = require("../controller/xaPhuongBhxhCtrl");
+} = require("../controller/managementAreaCtrl");
 
 /**
  * @swagger

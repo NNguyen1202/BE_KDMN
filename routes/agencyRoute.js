@@ -18,7 +18,7 @@ const {
   getCoQuanBhxhByProvince,
   getByWardCode,
   getByWardName,
-} = require("../controller/coQuanBhxhCtrl");
+} = require("../controller/agencyCtrl");
 
 /**
  * @swagger

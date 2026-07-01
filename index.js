@@ -53,11 +53,13 @@ const queryRoute = require("./routes/bookingRoute");
 const ownerStatusLogRoute = require("./routes/ownerStatusLogRoute");
 const rentalLocationStatusLogRoute = require("./routes/rentalLocationStatusLogRoute");
 const monthlyReportRoute = require("./routes/monthlyReportRoute");
-const coQuanBhxhRoute = require("./routes/coQuanBhxhRoute");
+const agencyRoute = require("./routes/agencyRoute");
 const provinceRoute = require("./routes/provinceRoute");
-const xaPhuongBhxhRoute = require("./routes/xaPhuongBhxhRoute");
+const managementAreaRoute = require("./routes/managementAreaRoute");
 const salesRecordRoute = require("./routes/salesRecordRoute");
-
+const panymentAccountRoute = require("./routes/paymentAccountRoute");
+const onlineRegistrationRoute = require("./routes/onlineRegistrationRoute");
+const agencyContactRoute = require("./routes/agencyContactRoute");
 
 const bodyParser = require("body-parser");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
@@ -76,7 +78,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"], // Các phương thức HTTP được phép
     allowedHeaders: ["Content-Type", "Authorization"], // Các header được phép
     credentials: true,
-  })
+  }),
 );
 app.use(morgan("dev"));
 app.use(bodyParser.json());
@@ -87,7 +89,7 @@ app.use(cookieParser());
 app.use(
   "/api-docs",
   swaggerUi.serve,
-  swaggerUi.setup(swaggerSpec, { explorer: true })
+  swaggerUi.setup(swaggerSpec, { explorer: true }),
 );
 
 app.use("/api/user", authRouter);
@@ -118,12 +120,14 @@ app.use("/api/value", valueRoute);
 app.use("/api", verifyRoute);
 app.use("/api/owner-status-log", ownerStatusLogRoute);
 app.use("/api/rental-location-status-log", rentalLocationStatusLogRoute);
-app.use("/api/monthly-report",monthlyReportRoute);
-app.use("/api/co-quan-bhxh", coQuanBhxhRoute);
+app.use("/api/monthly-report", monthlyReportRoute);
+app.use("/api/co-quan-bhxh", agencyRoute);
 app.use("/api/province", provinceRoute);
-app.use("/api/xa-phuong-bhxh", xaPhuongBhxhRoute);
-app.use("/api/sales-record", salesRecordRoute)
-
+app.use("/api/xa-phuong-bhxh", managementAreaRoute);
+app.use("/api/sales-record", salesRecordRoute);
+app.use("/api/payment-account", panymentAccountRoute);
+app.use("/api/online-registration", onlineRegistrationRoute);
+app.use("/api/agency-contact", agencyContactRoute);
 
 app.use(notFound);
 app.use(errorHandler);
